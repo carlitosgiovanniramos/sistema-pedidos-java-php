@@ -9,12 +9,12 @@ package clases;
  * @author Lenovo LOQ
  */
 public class Pedidos {
-
+    
     private String id_ped;
     private String ced_cli_ped;
     private String cod_pro_ped;
     private int can_ped;
-    //ampos para mapear el JSON de la API (CLIENTE y PRODUCTO nombres legibles)
+    // Campos para mapear el JSON de la API (CLIENTE y PRODUCTO nombres legibles)
     private String CLIENTE;
     private String PRODUCTO;
 
@@ -76,5 +76,7 @@ public class Pedidos {
     public void setPRODUCTO(String PRODUCTO) {
         this.PRODUCTO = PRODUCTO;
     }
-
+    
+    
+    
 }

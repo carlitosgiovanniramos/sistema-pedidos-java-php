@@ -58,37 +58,12 @@ public class interfazPedidos extends javax.swing.JFrame {
         jtblProductos.setModel(modelo);
     }
     
-        public void cargarTablaCedula(String cedula) {
+        public void cargarTablaCedula() {
         String[] columnas = {"Pedido", "Cliente", "Producto", "Cantidad"};
         String[] filas = new String[4];
         modelo = new DefaultTableModel(null, columnas);
 
-        ArrayList<Pedidos> pedidos = clienteArray.obtenerProductoPorCedula(cedula);
-        if (pedidos == null) {
-            System.out.println("CargarTabla: obtenerPedidos() devolvió null");
-            pedidos = new ArrayList<>();
-        }
-        if (pedidos.isEmpty()) {
-            System.out.println("CargarTabla: no hay pedidos para mostrar");
-        }
-        for (Pedidos pedido : pedidos) {
-            filas[0] = pedido.getId_ped();
-            // Muestra CLIENTE (nombre legible) pero internamente tienes ced_cli_ped
-            filas[1] = pedido.getCLIENTE() != null ? pedido.getCLIENTE() : pedido.getCed_cli_ped();
-            // Muestra PRODUCTO (descripción legible) pero internamente tienes cod_pro_ped
-            filas[2] = pedido.getPRODUCTO() != null ? pedido.getPRODUCTO() : pedido.getCod_pro_ped();
-            filas[3] = String.valueOf(pedido.getCan_ped());
-            modelo.addRow(filas);
-        }
-        jtblProductos.setModel(modelo);
-    }
-        
-        public void cargarTablaCodigo(String codigo) {
-        String[] columnas = {"Pedido", "Cliente", "Producto", "Cantidad"};
-        String[] filas = new String[4];
-        modelo = new DefaultTableModel(null, columnas);
-
-        ArrayList<Pedidos> pedidos = clienteArray.obtenerProductoPorCodigo(codigo);
+        ArrayList<Pedidos> pedidos = clienteArray.obtenerPedidos();
         if (pedidos == null) {
             System.out.println("CargarTabla: obtenerPedidos() devolvió null");
             pedidos = new ArrayList<>();
@@ -213,8 +188,8 @@ public class interfazPedidos extends javax.swing.JFrame {
         jbtnP = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jtxtBuscarCedula = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jbtnBuscarCedula = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblProductos = new javax.swing.JTable();
@@ -261,19 +236,9 @@ public class interfazPedidos extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Todo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jbtnBuscarCedula.setText("Buscar");
-        jbtnBuscarCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnBuscarCedulaActionPerformed(evt);
-            }
-        });
+
+        jButton1.setText("Todo");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -291,13 +256,14 @@ public class interfazPedidos extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtxtBuscarCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(jtxtBuscarCodigo))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
                         .addComponent(jbtnBuscarCedula)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jbtnBuscarCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbtnP)))
@@ -316,8 +282,8 @@ public class interfazPedidos extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jtxtBuscarCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jbtnBuscarCedula))
+                    .addComponent(jbtnBuscarCedula)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -501,12 +467,11 @@ public class interfazPedidos extends javax.swing.JFrame {
     private void jbtnBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarCodigoActionPerformed
         // TODO add your handling code here:
         String codigo = jtxtBuscarCodigo.getText();
-        cargarTablaCodigo(codigo);
 
     }//GEN-LAST:event_jbtnBuscarCodigoActionPerformed
 
     private void jbtnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPActionPerformed
-cargarTabla();
+
     }//GEN-LAST:event_jbtnPActionPerformed
 
     private void jbtnNuevoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoPActionPerformed
@@ -525,18 +490,7 @@ insertar();
 
     private void jtxtBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtBuscarCedulaActionPerformed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_jtxtBuscarCedulaActionPerformed
-
-    private void jbtnBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarCedulaActionPerformed
-        // TODO add your handling code here:
-        String cedula = jtxtBuscarCedula.getText();
-        cargarTablaCedula(cedula);
-    }//GEN-LAST:event_jbtnBuscarCedulaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-cargarTabla();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
